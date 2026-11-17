@@ -9,8 +9,8 @@ import com.coretech.healthmate.R
 import com.coretech.healthmate.data.model.HealthRecord
 
 class HistoryAdapter(
-    private val records: List<HealthRecord>,
-    private val onItemClick: (HealthRecord) -> Unit  // New: Callback for item click
+    private var records: List<HealthRecord>,
+    private val onItemClick: (HealthRecord) -> Unit
 ) : RecyclerView.Adapter<HistoryAdapter.RecordViewHolder>() {
 
     class RecordViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -33,11 +33,16 @@ class HistoryAdapter(
         holder.tvCalories.text = "Cal: ${record.calories}"
         holder.tvWater.text = "Water: ${record.water}ml"
 
-        // Handle click
         holder.itemView.setOnClickListener {
             onItemClick(record)
         }
     }
 
     override fun getItemCount() = records.size
+
+    // New method to update the list
+    fun updateRecords(newRecords: List<HealthRecord>) {
+        records = newRecords
+        notifyDataSetChanged()
+    }
 }
