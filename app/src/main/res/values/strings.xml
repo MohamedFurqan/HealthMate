@@ -1,6 +1,37 @@
 <resources>
     <string name="app_name">HealthMate</string>
-    <string name="welcome_title">HealthMate</string>
-    <string name="welcome_subtitle">Your Personal Health &amp; Wellness Tracker</string>
-    <string name="welcome_message">Welcome! Your journey to a healthier lifestyle starts here.</string>
+    
+    <!-- Navigation -->
+    <string name="nav_dashboard">Dashboard</string>
+    <string name="nav_add_record">Add Record</string>
+    <string name="nav_history">History</string>
+
+    <!-- Dashboard -->
+    <string name="dashboard_title">HealthMate</string>
+    <string name="dashboard_welcome">Welcome back! Here is your daily summary.</string>
+    <string name="metric_steps">Steps</string>
+    <string name="metric_calories">Calories</string>
+    <string name="metric_water">Water</string>
+    <string name="unit_steps">steps</string>
+    <string name="unit_calories">kcal</string>
+    <string name="unit_water">ml</string>
+    <string name="action_add_record">Add Record</string>
+    <string name="action_view_history">View History</string>
+
+    <!-- Add/Edit Record -->
+    <string name="add_record_title">Add Health Record</string>
+    <string name="edit_record_title">Edit Health Record</string>
+    <string name="label_date">Date</string>
+    <string name="label_steps">Steps Walked</string>
+    <string name="label_calories">Calories Burned</string>
+    <string name="label_water">Water Intake (ml)</string>
+    <string name="btn_save">Save Record</string>
+    <string name="btn_update">Update Record</string>
+    <string name="btn_delete">Delete Record</string>
+    <string name="btn_cancel">Cancel</string>
+
+    <!-- History -->
+    <string name="history_title">Health History</string>
+    <string name="search_date_hint">Search by date (YYYY-MM-DD)</string>
+    <string name="empty_history">No health records yet. Start tracking your daily activity!</string>
 </resources>
