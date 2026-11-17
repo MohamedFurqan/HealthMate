@@ -32,7 +32,12 @@ class HistoryFragment : Fragment(R.layout.fragment_history) {
 
         // 1. Setup RecyclerView
         adapter = HistoryAdapter(emptyList()) { clickedRecord ->
-            (activity as? MainActivity)?.loadFragment(EditRecordFragment())
+            val editFragment = EditRecordFragment().apply {
+                arguments = Bundle().apply {
+                    putInt("RECORD_ID", clickedRecord.id)
+                }
+            }
+            (activity as? MainActivity)?.loadFragment(editFragment)
         }
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = adapter

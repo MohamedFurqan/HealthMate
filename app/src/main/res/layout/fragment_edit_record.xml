@@ -32,6 +32,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/label_date"
+                android:textColor="@color/text_primary"
                 android:inputType="none"
                 android:focusable="false"
                 android:clickable="true" />
@@ -49,6 +50,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/label_steps"
+                android:textColor="@color/text_primary"
                 android:inputType="number" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -64,6 +66,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/label_calories"
+                android:textColor="@color/text_primary"
                 android:inputType="number" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -79,6 +82,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/label_water"
+                android:textColor="@color/text_primary"
                 android:inputType="number" />
         </com.google.android.material.textfield.TextInputLayout>
 
