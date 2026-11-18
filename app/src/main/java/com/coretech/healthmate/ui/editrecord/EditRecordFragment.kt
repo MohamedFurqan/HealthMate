@@ -52,6 +52,14 @@ class EditRecordFragment : Fragment(R.layout.fragment_edit_record) {
             }
         }
 
+        // Observe record-not-found state
+        viewModel.recordNotFound.observe(viewLifecycleOwner) { notFound ->
+            if (notFound) {
+                Toast.makeText(requireContext(), "This record no longer exists.", Toast.LENGTH_LONG).show()
+                (activity as? MainActivity)?.loadFragment(HistoryFragment())
+            }
+        }
+
         // Observe validation errors
         viewModel.validationError.observe(viewLifecycleOwner) { error ->
             if (error != null) {

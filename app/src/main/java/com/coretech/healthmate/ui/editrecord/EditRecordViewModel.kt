@@ -25,14 +25,26 @@ class EditRecordViewModel(application: Application) : AndroidViewModel(applicati
     private val _validationError = MutableLiveData<String?>()
     val validationError: LiveData<String?> get() = _validationError
 
+    private val _recordNotFound = MutableLiveData<Boolean>()
+    val recordNotFound: LiveData<Boolean> get() = _recordNotFound
+
     private var isSaving = false
 
     fun loadRecord(id: Int) {
         viewModelScope.launch {
-            val record = withContext(Dispatchers.IO) {
-                repository.getRecordById(id)
+            try {
+                val record = withContext(Dispatchers.IO) {
+                    repository.getRecordById(id)
+                }
+                if (record == null) {
+                    _recordNotFound.value = true
+                } else {
+                    _loadedRecord.value = record
+                    _recordNotFound.value = false
+                }
+            } catch (e: Exception) {
+                _recordNotFound.value = true
             }
-            _loadedRecord.value = record
         }
     }
 
@@ -40,7 +52,6 @@ class EditRecordViewModel(application: Application) : AndroidViewModel(applicati
         if (isSaving) return
         val currentRecord = _loadedRecord.value ?: return
 
-        // Validation
         if (date.isBlank()) {
             _validationError.value = "Please select a date."
             return
@@ -49,7 +60,6 @@ class EditRecordViewModel(application: Application) : AndroidViewModel(applicati
         val calories = validateNumber(caloriesStr, "Calories") ?: return
         val water = validateNumber(waterStr, "Water") ?: return
 
-        // Create updated record using .copy() to preserve the ID
         val updatedRecord = currentRecord.copy(
             date = date,
             steps = steps,
@@ -86,7 +96,7 @@ class EditRecordViewModel(application: Application) : AndroidViewModel(applicati
             _validationError.value = "Please enter $fieldName."
             return null
         }
-        val number = value.toIntOrNull()
+        val number = value.toLongOrNull()
         if (number == null) {
             _validationError.value = "$fieldName must be a valid whole number."
             return null
@@ -95,7 +105,11 @@ class EditRecordViewModel(application: Application) : AndroidViewModel(applicati
             _validationError.value = "$fieldName cannot be negative."
             return null
         }
-        return number
+        if (number > Int.MAX_VALUE) {
+            _validationError.value = "$fieldName is too large. Please enter a smaller value."
+            return null
+        }
+        return number.toInt()
     }
 
     fun clearError() {

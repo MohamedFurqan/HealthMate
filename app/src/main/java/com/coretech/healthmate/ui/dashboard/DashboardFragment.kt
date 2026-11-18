@@ -3,6 +3,7 @@ package com.coretech.healthmate.ui.dashboard
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.coretech.healthmate.MainActivity
@@ -30,16 +31,14 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
         val displayFormat = SimpleDateFormat("EEEE, dd MMM yyyy", Locale.getDefault())
         tvTodayDate.text = "Today, ${displayFormat.format(Date())}"
 
-        // 2. Observe Today's Record from ViewModel
+        // 2. Observe Today's Record
         viewModel.todayRecord.observe(viewLifecycleOwner) { record ->
             if (record != null) {
-                // Record exists: display values
                 tvStepsValue.text = String.format("%,d", record.steps)
                 tvCaloriesValue.text = String.format("%,d", record.calories)
                 tvWaterValue.text = String.format("%,d", record.water)
                 tvNoRecordMessage.visibility = View.GONE
             } else {
-                // No record: display zeros + message
                 tvStepsValue.text = "0"
                 tvCaloriesValue.text = "0"
                 tvWaterValue.text = "0"
@@ -47,7 +46,14 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
             }
         }
 
-        // 3. Quick Action Buttons
+        // 3. Observe Errors
+        viewModel.errorMessage.observe(viewLifecycleOwner) { error ->
+            if (error != null) {
+                Toast.makeText(requireContext(), error, Toast.LENGTH_LONG).show()
+            }
+        }
+
+        // 4. Quick Action Buttons
         view.findViewById<com.google.android.material.button.MaterialButton>(R.id.btnQuickAdd).setOnClickListener {
             (activity as? MainActivity)?.loadFragment(AddRecordFragment())
         }
@@ -56,7 +62,6 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
             (activity as? MainActivity)?.loadFragment(HistoryFragment())
         }
 
-        // 4. Load today's record every time the Fragment is created (refresh on navigation)
         viewModel.loadTodayRecord()
     }
 }

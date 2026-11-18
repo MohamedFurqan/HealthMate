@@ -59,7 +59,7 @@ class AddRecordViewModel(application: Application) : AndroidViewModel(applicatio
             _validationError.value = "Please enter $fieldName."
             return null
         }
-        val number = value.toIntOrNull()
+        val number = value.toLongOrNull()
         if (number == null) {
             _validationError.value = "$fieldName must be a valid whole number."
             return null
@@ -68,7 +68,11 @@ class AddRecordViewModel(application: Application) : AndroidViewModel(applicatio
             _validationError.value = "$fieldName cannot be negative."
             return null
         }
-        return number
+        if (number > Int.MAX_VALUE) {
+            _validationError.value = "$fieldName is too large. Please enter a smaller value."
+            return null
+        }
+        return number.toInt()
     }
 
     fun clearError() {

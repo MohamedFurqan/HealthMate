@@ -21,16 +21,24 @@ class DashboardViewModel(application: Application) : AndroidViewModel(applicatio
     private val _todayRecord = MutableLiveData<HealthRecord?>()
     val todayRecord: LiveData<HealthRecord?> get() = _todayRecord
 
+    private val _errorMessage = MutableLiveData<String?>()
+    val errorMessage: LiveData<String?> get() = _errorMessage
+
     fun loadTodayRecord() {
-        // Format today's date consistently with the database
         val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.US)
         val todayDate = dateFormat.format(Date())
 
         viewModelScope.launch {
-            val record = withContext(Dispatchers.IO) {
-                repository.getRecordByDate(todayDate)
+            try {
+                val record = withContext(Dispatchers.IO) {
+                    repository.getRecordByDate(todayDate)
+                }
+                _todayRecord.value = record
+                _errorMessage.value = null
+            } catch (e: Exception) {
+                _todayRecord.value = null
+                _errorMessage.value = "Could not load today's data. Please try again."
             }
-            _todayRecord.value = record
         }
     }
 }
