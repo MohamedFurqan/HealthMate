@@ -1,26 +1,30 @@
 # HealthMate - Personal Health & Wellness Tracker
-HealthMate is a native Android application developed as part of a BSc (Hons) Software Engineering coursework. It allows users to record, manage, search, and review their daily health activities (steps, calories, water intake).
+
+A native Android application developed as part of a BSc (Hons) Software Engineering coursework.
+
+## Project Overview
+HealthMate allows users to record, manage, search, and review their daily health activities (steps, calories burned, and water intake). The application works entirely offline and stores data locally using SQLite.
+
+## Features
+- **Dashboard:** View today's steps, calories, and water intake at a glance.
+- **Add Record:** Create a new health record with date, steps, calories, and water.
+- **History:** View all saved records, ordered newest first.
+- **Search:** Filter records by date using a native date picker.
+- **Edit:** Update existing records with validation.
+- **Delete:** Remove records with a confirmation dialog.
+- **Validation:** Negative values, empty fields, duplicate dates, and overly large integers are rejected.
+- **Offline:** All data is stored locally in SQLite; no internet required.
 
 ## Technology Stack
-- **Language:** Kotlin
-- **UI:** XML Layouts
-- **Architecture:** MVVM (Model-View-ViewModel)
-- **Database:** SQLite (Native Android APIs)
-- **Build System:** Gradle
-- **IDE:** Visual Studio Code
+| Component | Technology |
+|---|---|
+| Language | Kotlin |
+| UI | XML Layouts |
+| Platform | Native Android |
+| Database | SQLite (via `SQLiteOpenHelper`) |
+| Architecture | MVVM |
+| Build System | Gradle (Kotlin DSL) |
+| IDE | Visual Studio Code |
 
-## Current Status
-- [x] Module 01: Project Setup and Foundation
-- [ ] Module 02: Database Management
-- [ ] Module 03: Data Models and Repository
-- [ ] Module 04: Application Navigation and Main UI
-- [ ] Module 05: Add Health Record
-- [ ] Module 06: View Records and Search
-- [ ] Module 07: Edit and Delete Records
-- [ ] Module 08: Dashboard Integration
-- [ ] Module 09: Validation and Polish
-- [ ] Module 10: Testing and Final Release
-
-## Setup Instructions
-To build this project, ensure you have Java 21 and the Android SDK installed. 
-Run `./gradlew assembleDebug` to build the APK.
+## Architecture
+The application follows the **MVVM** (Model-View-ViewModel) pattern:
