@@ -56,9 +56,9 @@ class EditRecordViewModel(application: Application) : AndroidViewModel(applicati
             _validationError.value = "Please select a date."
             return
         }
-        val steps = validateNumber(stepsStr, "Steps") ?: return
-        val calories = validateNumber(caloriesStr, "Calories") ?: return
-        val water = validateNumber(waterStr, "Water") ?: return
+        val steps = validateNumber(stepsStr, "Steps", 100_000) ?: return
+        val calories = validateNumber(caloriesStr, "Calories", 50_000) ?: return
+        val water = validateNumber(waterStr, "Water", 20_000) ?: return
 
         val updatedRecord = currentRecord.copy(
             date = date,
@@ -91,7 +91,7 @@ class EditRecordViewModel(application: Application) : AndroidViewModel(applicati
         }
     }
 
-    private fun validateNumber(value: String, fieldName: String): Int? {
+    private fun validateNumber(value: String, fieldName: String, maxValue: Int): Int? {
         if (value.isBlank()) {
             _validationError.value = "Please enter $fieldName."
             return null
@@ -105,8 +105,8 @@ class EditRecordViewModel(application: Application) : AndroidViewModel(applicati
             _validationError.value = "$fieldName cannot be negative."
             return null
         }
-        if (number > Int.MAX_VALUE) {
-            _validationError.value = "$fieldName is too large. Please enter a smaller value."
+        if (number > maxValue) {
+            _validationError.value = "$fieldName exceeds the realistic daily limit of $maxValue."
             return null
         }
         return number.toInt()

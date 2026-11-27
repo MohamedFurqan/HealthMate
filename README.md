@@ -26,5 +26,37 @@ HealthMate allows users to record, manage, search, and review their daily health
 | Build System | Gradle (Kotlin DSL) |
 | IDE | Visual Studio Code |
 
-## Architecture
-The application follows the **MVVM** (Model-View-ViewModel) pattern:
+### Package Structure
+- `data/database/` — `DatabaseHelper` (table creation, dummy data)
+- `data/model/` — `HealthRecord` data class
+- `data/repository/` — `HealthRepository`, `OperationResult`
+- `ui/dashboard/` — Dashboard screen
+- `ui/addrecord/` — Add Record screen
+- `ui/history/` — History list + search
+- `ui/editrecord/` — Edit/Delete screen
+
+## Database
+**Table:** `health_records`
+
+| Column | Type | Constraint |
+|---|---|---|
+| id | INTEGER | PRIMARY KEY AUTOINCREMENT |
+| date | TEXT | NOT NULL, UNIQUE |
+| steps | INTEGER | NOT NULL |
+| calories | INTEGER | NOT NULL |
+| water | INTEGER | NOT NULL |
+
+Three dummy records are seeded on first database creation for demonstration.
+
+## Prerequisites
+- JDK 21
+- Android SDK (API 34)
+- Gradle Wrapper (included)
+- Android device or emulator (API 24+)
+
+## Build Instructions
+1. Clone the repository.
+2. Set `ANDROID_HOME` to your Android SDK path.
+3. Build the debug APK:
+   ```bash
+   ./gradlew assembleDebug

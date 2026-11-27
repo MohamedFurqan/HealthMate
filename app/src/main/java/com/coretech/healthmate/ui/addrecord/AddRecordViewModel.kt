@@ -34,9 +34,9 @@ class AddRecordViewModel(application: Application) : AndroidViewModel(applicatio
             return
         }
 
-        val steps = validateNumber(stepsStr, "Steps") ?: return
-        val calories = validateNumber(caloriesStr, "Calories") ?: return
-        val water = validateNumber(waterStr, "Water") ?: return
+        val steps = validateNumber(stepsStr, "Steps", 100_000) ?: return
+        val calories = validateNumber(caloriesStr, "Calories", 50_000) ?: return
+        val water = validateNumber(waterStr, "Water", 20_000) ?: return
 
         // 2. Create the object
         val record = HealthRecord(date = date, steps = steps, calories = calories, water = water)
@@ -54,7 +54,7 @@ class AddRecordViewModel(application: Application) : AndroidViewModel(applicatio
         }
     }
 
-    private fun validateNumber(value: String, fieldName: String): Int? {
+    private fun validateNumber(value: String, fieldName: String, maxValue: Int): Int? {
         if (value.isBlank()) {
             _validationError.value = "Please enter $fieldName."
             return null
@@ -68,8 +68,8 @@ class AddRecordViewModel(application: Application) : AndroidViewModel(applicatio
             _validationError.value = "$fieldName cannot be negative."
             return null
         }
-        if (number > Int.MAX_VALUE) {
-            _validationError.value = "$fieldName is too large. Please enter a smaller value."
+        if (number > maxValue) {
+            _validationError.value = "$fieldName exceeds the realistic daily limit of $maxValue."
             return null
         }
         return number.toInt()
