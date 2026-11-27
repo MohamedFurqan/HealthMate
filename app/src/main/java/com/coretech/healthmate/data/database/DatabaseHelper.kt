@@ -25,7 +25,7 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
 
     // This method is called ONLY when the database is created for the very first time
     override fun onCreate(db: SQLiteDatabase) {
-        // 1. Create the table
+        // Create the table
         val createTableQuery = """
             CREATE TABLE $TABLE_HEALTH_RECORDS (
                 $COLUMN_ID INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -38,15 +38,13 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
         
         db.execSQL(createTableQuery)
 
-        // 2. Insert the three initial dummy records
+        // Insert the three initial dummy records
         insertInitialDummyData(db)
     }
 
     // This method is called ONLY when DATABASE_VERSION is increased
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
-        // For Module 02, we will drop the old table and recreate it.
-        // In a real production app, we would use ALTER TABLE to preserve user data.
-        // But since our schema is simple, this is safe for this coursework.
+        
         db.execSQL("DROP TABLE IF EXISTS $TABLE_HEALTH_RECORDS")
         onCreate(db)
     }

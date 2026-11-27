@@ -28,7 +28,7 @@ class AddRecordViewModel(application: Application) : AndroidViewModel(applicatio
     fun saveRecord(date: String, stepsStr: String, caloriesStr: String, waterStr: String) {
         if (isSaving) return // Prevent duplicate submissions
 
-        // 1. Validation
+        // Validation
         if (date.isBlank()) {
             _validationError.value = "Please select a date."
             return
@@ -38,10 +38,10 @@ class AddRecordViewModel(application: Application) : AndroidViewModel(applicatio
         val calories = validateNumber(caloriesStr, "Calories", 50_000) ?: return
         val water = validateNumber(waterStr, "Water", 20_000) ?: return
 
-        // 2. Create the object
+        // Create the object
         val record = HealthRecord(date = date, steps = steps, calories = calories, water = water)
 
-        // 3. Save via Repository on a Background Thread
+        //Save via Repository on a Background Thread
         isSaving = true
         viewModelScope.launch(Dispatchers.IO) {
             val result = repository.insertRecord(record)

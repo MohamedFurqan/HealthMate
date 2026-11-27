@@ -42,7 +42,7 @@ class EditRecordFragment : Fragment(R.layout.fragment_edit_record) {
         // Load the record from the database
         viewModel.loadRecord(recordId)
 
-        // Observe the loaded record and populate the form
+        // Loaded record and populating the form
         viewModel.loadedRecord.observe(viewLifecycleOwner) { record ->
             if (record != null) {
                 etDate.setText(record.date)
@@ -52,7 +52,7 @@ class EditRecordFragment : Fragment(R.layout.fragment_edit_record) {
             }
         }
 
-        // Observe record-not-found state
+        // record-not-found state
         viewModel.recordNotFound.observe(viewLifecycleOwner) { notFound ->
             if (notFound) {
                 Toast.makeText(requireContext(), "This record no longer exists.", Toast.LENGTH_LONG).show()
@@ -60,7 +60,7 @@ class EditRecordFragment : Fragment(R.layout.fragment_edit_record) {
             }
         }
 
-        // Observe validation errors
+        // validation errors
         viewModel.validationError.observe(viewLifecycleOwner) { error ->
             if (error != null) {
                 Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show()
@@ -68,7 +68,7 @@ class EditRecordFragment : Fragment(R.layout.fragment_edit_record) {
             }
         }
 
-        // Observe operation results (Update/Delete)
+        //Operation results (Update/Delete)
         viewModel.operationResult.observe(viewLifecycleOwner) { result ->
             when (result) {
                 is OperationResult.Success -> {

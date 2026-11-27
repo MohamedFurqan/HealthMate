@@ -2,7 +2,6 @@ package com.coretech.healthmate.data.repository
 
 /**
  * A sealed class representing the outcome of a repository operation.
- * This allows the ViewModel to handle specific scenarios (like a duplicate date) cleanly.
  */
 sealed class OperationResult {
     data class Success(val message: String = "Operation successful") : OperationResult()

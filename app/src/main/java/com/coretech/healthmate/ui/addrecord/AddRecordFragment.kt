@@ -29,7 +29,7 @@ class AddRecordFragment : Fragment(R.layout.fragment_add_record) {
         val etWater = view.findViewById<TextInputEditText>(R.id.etWater)
         val btnSave = view.findViewById<MaterialButton>(R.id.btnSave)
 
-        // 1. Setup Date Picker (Default to today)
+        //Setup Date Picker (Default to today)
         val calendar = Calendar.getInstance()
         val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.US)
         etDate.setText(dateFormat.format(calendar.time))
@@ -46,7 +46,7 @@ class AddRecordFragment : Fragment(R.layout.fragment_add_record) {
             datePicker.show()
         }
 
-        // 2. Observe Validation Errors
+        //Observe Validation Errors
         viewModel.validationError.observe(viewLifecycleOwner) { errorMessage ->
             if (errorMessage != null) {
                 Toast.makeText(requireContext(), errorMessage, Toast.LENGTH_SHORT).show()
@@ -54,7 +54,7 @@ class AddRecordFragment : Fragment(R.layout.fragment_add_record) {
             }
         }
 
-        // 3. Observe Save Results
+        // Observe Save Results
         viewModel.saveResult.observe(viewLifecycleOwner) { result ->
             when (result) {
                 is OperationResult.Success -> {
@@ -72,7 +72,7 @@ class AddRecordFragment : Fragment(R.layout.fragment_add_record) {
             }
         }
 
-        // 4. Handle Save Button Click
+        // Handle Save Button Click
         btnSave.setOnClickListener {
             viewModel.saveRecord(
                 date = etDate.text.toString(),

@@ -27,11 +27,11 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
         val tvWaterValue = view.findViewById<TextView>(R.id.tvWaterValue)
         val tvNoRecordMessage = view.findViewById<TextView>(R.id.tvNoRecordMessage)
 
-        // 1. Display Today's Date
+        // Display Today's Date
         val displayFormat = SimpleDateFormat("EEEE, dd MMM yyyy", Locale.getDefault())
         tvTodayDate.text = "Today, ${displayFormat.format(Date())}"
 
-        // 2. Observe Today's Record
+        // Observe Today's Record
         viewModel.todayRecord.observe(viewLifecycleOwner) { record ->
             if (record != null) {
                 tvStepsValue.text = String.format("%,d", record.steps)
@@ -46,14 +46,14 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
             }
         }
 
-        // 3. Observe Errors
+        //Observe Errors
         viewModel.errorMessage.observe(viewLifecycleOwner) { error ->
             if (error != null) {
                 Toast.makeText(requireContext(), error, Toast.LENGTH_LONG).show()
             }
         }
 
-        // 4. Quick Action Buttons
+        //Quick Action Buttons
         view.findViewById<com.google.android.material.button.MaterialButton>(R.id.btnQuickAdd).setOnClickListener {
             (activity as? MainActivity)?.loadFragment(AddRecordFragment())
         }

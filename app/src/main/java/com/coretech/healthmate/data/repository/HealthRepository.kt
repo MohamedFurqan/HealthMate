@@ -173,7 +173,6 @@ class HealthRepository(context: Context) {
 
     /**
      * Helper method to map a Cursor row to a HealthRecord object.
-     * This avoids duplicating the column mapping logic in every getter method.
      */
     private fun cursorToHealthRecord(cursor: Cursor): HealthRecord {
         return HealthRecord(
